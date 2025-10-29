@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="3D Equivariant Visuomotor Policy Learning via Spherical Projection">
+    <meta name="keywords" content="Equivariance, Visuomotor Policy Learning, Robotic Manipulation">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        3D Equivariant Visuomotor Policy Learning via Spherical Projection
+    </title>
+
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="resources/images/icon.png">
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+
+    <script src="https://kit.fontawesome.com/19914a84eb.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({ tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']], processEscapes: true}, "HTML-CSS": {minScaleAdjust: 100} });
+        </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-05SKCFECYP"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-05SKCFECYP');
+    </script>
+</head>
+
+<body>
+    <section class="hero is-link is-fullheight video" style="overflow: hidden; position:relative;">
+        <div class="hero-video"
+            style="height: 100%; display: flex; justify-content: center; align-items: center; padding: 0; margin: 0">
+            <video playsinline autoplay muted loop style="height: 100%; aspect-ratio: 16/9; object-fit: cover">
+                <source src=" ./resources/videos/isp_teaser.mp4" type="video/mp4" />
+            </video>
+        </div>
+        <div class="hero-video is-hidden-tablet is-inline-block-mobile"
+            style="height: 154.28571428vw; width: 100%; min-width:64.81481481vh;min-height:100%;">
+            <video playsinline autoplay muted loop>
+                <source src=" ./resources/videos/isp_teaser.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="overlay"></div>
+        <!-- Hero head: will stick at the top -->
+        <div class="hero-head is-hidden-mobile">
+            <!-- Removed the navbar with buttons that were originally here -->
+        </div>
+
+        <!-- Hero content: will be in the middle -->
+        <div class="hero-body" style="padding-top: 2rem; transform: translateY(-5vh);">
+            <div class="container has-text-centered">
+                <h1 class="subtitle is-1 publication-title is-size-3-mobile"
+                    style="font-size: 4rem; line-height: 1.2; margin-bottom: 2rem; margin-top: 0rem;" id="title">
+                    3D Equivariant Visuomotor Policy Learning via Spherical Projection
+                </h1>
+                <script>
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('title').style.marginTop = '3rem';
+                    }
+                </script>
+                <div style="margin-bottom: 1.5em;">
+                    <div class="column has-text-centered">
+                        <div class="publication-links">
+                            <!-- PDF Link. -->
+                            <span class="link-block">
+                                <a href="./resources/isp.pdf" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <img src="./static/images/pdf.svg" alt="PDF" />
+                                    </span>
+                                    <span>Paper</span>
+                                </a>
+                            </span>
+                            <span class="link-block">
+                                <a href="https://arxiv.org/abs/2505.16969"
+                                    class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <img src="./static/images/arxiv.svg" alt="ArXiv" />
+                                    </span>
+                                    <span>arXiv</span>
+                                </a>
+                            </span>
+                            <!-- Video Link. -->
+                            <span class="link-block">
+                                <a href="https://youtu.be/b1aAnbDHQh0"
+                                    class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <img src="./static/images/youtube.svg" alt="Youtube" />
+                                    </span>
+                                    <span>Video</span>
+                                </a>
+                            </span>
+                            <!-- Code Link. -->
+                            <span class="link-block">
+                                <a href="https://isp-3d.github.io/"
+                                    class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <i class="fab fa-github"></i>
+                                    </span>
+                                    <span>Code (Coming Soon)</span>
+                                </a>
+                            </span>
+                            <!-- X Link. -->
+                            <span class="link-block">
+                                <a href="https://x.com/boce_hu"
+                                    class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <img src="./resources/images/x-logo-white.png" alt="X" />
+                                    </span>
+                                    <span style="margin-left: 10px; margin-right: 10px;">X (Coming Soon)</span>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                    <h2 class="is-2 is-italic is-size-4-mobile"
+                        style="font-size: 2rem; opacity: 90%; font-weight: 500; margin-bottom: 0.8em; letter-spacing: 0.02em;">
+                        NeurIPS 2025 (Spotlight)
+                    </h2>
+                    <h2 class="is-2 is-size-4-mobile"
+                        style="font-size: 1.5rem; opacity: 95%; line-height: 1.6; margin-bottom: 0.3em;">
+                        <a href="https://bocehu.github.io/">Boce Hu</a>,
+                        <a href="https://www.dianwang.io/">Dian Wang</a>,
+                        <a href="https://dmklee.github.io/">David Klee</a>,
+                        <a href="https://heng-tian.github.io/">Heng Tian</a>,
+                        <a href="https://zxp-s-works.github.io/">Xupeng Zhu</a>,
+                        <a href="https://haojhuang.github.io/">Haojie Huang</a>,<br>
+                        <a href="https://www2.ccs.neu.edu/research/helpinghands/people/">Robert
+                            Platt<sup>&dagger;</sup></a>,
+                        <a href="https://www.robinwalters.com/">Robin Walters<sup>&dagger;</sup></a>
+                    </h2>
+                    <h2 class="is-2 is-italic is-size-4-mobile"
+                        style="font-size: 1.3rem; opacity: 90%; font-weight: 200; letter-spacing: 0.01em;">
+                        <sup>&dagger;</sup> Equal Advising
+                    </h2>
+                    <div class="has-text-centered" style="margin-top: 2.5rem; margin-bottom: 2rem;">
+                        <img src="./resources/images/northeastern_logo.png" alt="Northeastern Logo"
+                            style="height: 3.75rem; margin-right: 1.8rem; transform: translateX(10px)"
+                            class="is-hidden-mobile">
+                        <img src="./resources/images/northeastern_logo.png" alt="Northeastern Logo"
+                            style="height: 2.7rem; margin-right: 0.9rem; transform: translateX(6px)"
+                            class="is-hidden-tablet">
+
+                        <img src="./resources/images/stanford_logo.png" alt="Stanford Logo"
+                            style="height: 3.75rem; margin-right: 1.8rem; transform: translateY(4px)"
+                            class="is-hidden-mobile">
+                        <img src="./resources/images/stanford_logo.png" alt="Stanford Logo"
+                            style="height: 2.7rem; margin-right: 0.9rem; transform: translateY(3px)"
+                            class="is-hidden-tablet">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <style>
+        .highlight-blue {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .highlight-green {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        /* Video styling with rounded corners */
+        .video-container {
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .rounded-video {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            min-height: 200px;
+        }
+
+        .rounded-video:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            .video-container {
+                padding: 0.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .rounded-video {
+                border-radius: 12px;
+                min-height: 150px;
+            }
+
+        }
+
+        @media screen and (max-width: 480px) {
+            .video-container {
+                padding: 0.25rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .rounded-video {
+                border-radius: 8px;
+                min-height: 120px;
+            }
+
+        }
+
+
+        ::selection {
+            background: #ff6600;
+            color: #ffffff;
+        }
+
+        h2 a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        h2 a:hover {
+            color: #ff6600 !important;
+        }
+    </style>
+
+
+    <section class="section is-small" style="margin-top: 3rem;">
+        <div class="container is-max-desktop">
+            <h2 class="title is-2 has-text-centered is-size-4-mobile">Abstract</h2>
+            <div class="columns is-centered">
+                <div class="column is-11 has-text-justified">
+                    <p class="subtitle is-5 has-text-justified is-size-6-mobile">
+                        Equivariant models have recently been shown to improve the data efficiency of diffusion policy
+                        by a significant margin.
+                        However, prior work that explored this direction focused primarily on point cloud inputs
+                        generated by multiple cameras
+                        fixed in the workspace. This type of point cloud input is not compatible with the now-common
+                        setting where the primary
+                        input modality is an eye-in-hand RGB camera like a GoPro. This paper closes this gap by
+                        incorporating into the diffusion
+                        policy model a process that projects features from the 2D RGB camera image onto a sphere. This
+                        enables us to reason
+                        about symmetries in $\mathrm{SO}(3)$ without explicitly reconstructing a point cloud. We perform
+                        extensive experiments
+                        in both simulation and the real world that demonstrate that our method consistently outperforms
+                        strong baselines in
+                        terms of both performance and sample efficiency. Our work, <strong>Image-to-Sphere Policy
+                            (ISP)</strong>, is the first
+                        $\mathrm{SO}(3)$-equivariant policy learning framework for robotic manipulation that works using
+                        only monocular RGB
+                        inputs.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- <section class="section is-medium" id="sec0">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered">
+                <div class="column is-four-fifths has-text-justified">
+
+                    <h2 class="subtitle">
+                        <p><strong>GSWorld</strong> is a photo-realistic simulator combining 3D Gaussian Splatting with
+                            physics engines to reduce sim2real visual gap, with diverse downstream applications.
+                        </p>
+
+                        <p>Creating a digital twin is getting closer to reality, but how can we maximize its utility for
+                            <strong>robotic manipulation</strong>?
+                        </p>
+                    </h2>
+
+                    <h2 class="subtitle">
+                        <p>To this end, we propose GSWorld and explore its applications at:
+                        <ul>
+                            <li>1. Learning <strong>zero-shot</strong> sim2real pixel-to-action manipulation policy with
+                                photo-realistic rendering</li>
+                            <li>2. Automated high-quality <strong>DAgger</strong> data collection for adapting policies
+                                to deployment environments</li>
+                            <li>3. Reproducible <strong>benchmarking</strong> of real-robot manipulation policies in
+                                simulation</li>
+                            <li>4. Simulation data collection by <strong>virtual teleoperation</strong></li>
+                            <li>5. Sim2real <strong>visual reinforcement learning</strong></li>
+                        </ul>
+                        </p>
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <section class="section is-small" style="margin-top: -3rem;">
+        <div class="container is-max-desktop is-centered">
+            <img src="./resources/images/teaser.png" style="width: 60%; display: block; margin: 0 auto;"
+                class="is-hidden-mobile">
+
+            <img src="./resources/images/teaser.png" style="width: 100%; display: block; margin: 0 auto;"
+                class="is-hidden-desktop">
+        </div>
+    </section>
+
+    <section class="section is-small" style="margin-top: 0rem;">
+        <div class="container is-max-desktop">
+            <h2 class="title is-2 has-text-centered is-size-4-mobile">Summary Video of ISP</h2>
+            <iframe width="100%" style="aspect-ratio: 16 / 9;"
+                src="https://www.youtube.com/embed/b1aAnbDHQh0?si=BZQfrupnYtxbtJ1H" title="ISP Video" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+    </section>
+
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <h2 class="title is-2 has-text-centered is-size-4-mobile">Methodology</h2>
+            <div class="container is-max-desktop is-centered">
+                <img src="./resources/images/method_pipeline.png" style="width: 100%; display: block; margin: 0 auto;"
+                    class="is-hidden-mobile">
+
+                <img src="./resources/images/method_pipeline.png" style="width: 100%; display: block; margin: 0 auto;"
+                    class="is-hidden-desktop">
+            </div>
+
+            <div class="columns is-centered">
+                <div class="column is-11 has-text-justified ">
+                    <p class="subtitle is-5 has-text-justified is-size-6-mobile"
+                        style="margin-bottom: 2rem; margin-top: 2rem;">
+                        We introduce <strong>Image-to-Sphere Policy</strong> (<strong>ISP</strong>), the first
+                        $\mathrm{SO}(3)$-equivariant policy learning framework
+                        that <strong>models 3D symmetries directly from 2D RGB inputs</strong> to support robust and
+                        sample-efficient
+                        closed-loop control.
+
+                        ISP consists of two key components: an $\mathrm{SO}(3)$-equivariant observation encoder
+                        and an $\mathrm{SO(3)}$-equivariant diffusion module. The observation encoder first
+                        extracts visual features from the RGB input and projects them onto the sphere. An
+                        equivariance correction (shown below) is then applied using the gripper orientation $R_x$ to
+                        compensate for
+                        the camera's dynamic viewpoint (red arrow in the figure). The corrected spherical signal
+                        $\Phi_{\text{corr}}(x)$ is convolved with spherical convolution layers to obtain
+                        $\mathrm{SO}(3)$-equivariant representations.
+                        Proprioceptive inputs are embedded through equivariant linear layers. Both image and
+                        proprioceptive
+                        features are represented as Fourier coefficients $c_{\ell}$ on $\mathrm{SO}(3)$ and
+                        fused (yellow block). Finally, the encoded signals are transformed back to the spatial
+                        domain via inverse Fourier transform, and a finite set of group elements is sampled as the
+                        conditioning vector
+                        for $\mathrm{SO}(3)$-equivariant denoising. The noisy action sequence is processed in the same
+                        way, through equivariant linear layers and mapped to the same group elements.
+                    </p>
+                </div>
+            </div>
+
+            <div class="container is-max-desktop is-centered">
+                <img src="./resources/images/equi_repr.png" style="width: 100%; display: block; margin: 0 auto;"
+                    class="is-hidden-mobile">
+
+                <img src="./resources/images/equi_repr.png" style="width: 100%; display: block; margin: 0 auto;"
+                    class="is-hidden-desktop">
+            </div>
+
+            <div class="columns is-centered">
+                <div class="column is-11 has-text-justified ">
+                    <p class="subtitle is-5 has-text-justified is-size-6-mobile"
+                        style="margin-bottom: 0rem; margin-top: 2rem;">
+                        To handle viewpoint variations introduced by the wrist-mounted camera, we introduce
+                        <strong>Equivariance Correction</strong> based on
+                        the gripper orientation $\mathrm{R}$. Although different global scene transformations lead to
+                        distinct
+                        poses in the world frame,
+                        the images captured in the camera's local frame and consequently the projected spherical signals
+                        remain identical. By
+                        applying Equivariance Correction, which applies the gripper orientation $R$, these spherical
+                        signals are aligned to a common world frame, ensuring that
+                        their transformation remains equivariant under arbitrary global scene rotations. As illustrated
+                        in the figure above,
+                        this correction resolves the mismatch between identical scenes observed from different global
+                        configurations, preserving
+                        the $\mathrm{SO}(3)$-equivariant structure of the representation.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <h2 class="title is-2 has-text-centered is-size-4-mobile">Simulation Results</h2>
+            <h3 class="title is-3 has-text-centered is-size-5-mobile" style="margin-bottom: 0rem; margin-top: 3rem;">
+                Performance Comparison</h3>
+
+            <div class="columns is-centered">
+                <div class="column is-11 has-text-justified ">
+                    <p class="subtitle is-5 has-text-justified is-size-6-mobile"
+                        style="margin-bottom: 1rem; margin-top: 1.3rem;">
+                        We evaluate ISP on 12 simulation tasks from the <strong><a href="https://mimicgen.github.io/"
+                                target="_blank">MimicGen</a></strong> simulator. In each task, the left image
+                        shows the side view of the task scene, while the right image shows the corresponding eye-in-hand
+                        view used in the
+                        experiments.
+                    </p>
+                </div>
+            </div>
+            <div class="container is-max-desktop is-centered">
+                <img src="./resources/images/simulation_mimicgen.png"
+                    style="width: 100%; display: block; margin: 0 auto;" class="is-hidden-mobile">
+
+                <img src="./resources/images/simulation_mimicgen.png"
+                    style="width: 100%; display: block; margin: 0 auto;" class="is-hidden-desktop">
+            </div>
+
+
+            <div class="columns is-centered">
+                <div class="column is-11 has-text-justified ">
+                    <p class="subtitle is-5 has-text-justified is-size-6-mobile"
+                        style="margin-bottom: 0rem; margin-top: 1.3rem;">
+                        The table below shows the success rates (%) on MimicGen tasks with 100 and 200 demonstrations,
+                        averaged over 3 seeds. We
+                        report both the overall mean
+                        and per-task performance. The best result is highlighted in <strong>bold</strong>, and the
+                        second best
+                        is <u>underlined</u>. Full results with standard deviations are in <strong><a
+                                href="standard_deviation.html" target="_blank">here</a></strong>.
+
+                    </p>
+                </div>
+            </div>
+
+            <div class="container is-max-desktop is-centered">
+                <img src="./resources/images/simulation_results.png"
+                    style="width: 100%; display: block; margin: 0 auto;" class="is-hidden-mobile">
+
+                <img src="./resources/images/simulation_results.png"
+                    style="width: 100%; display: block; margin: 0 auto;" class="is-hidden-desktop">
+            </div>
+
+            <div class="columns is-centered">
+                <div class="column is-11 has-text-justified ">
+                    <p class="subtitle is-5 has-text-justified is-size-6-mobile"
+                        style="margin-bottom: 0rem; margin-top: 1rem;">
+                        In terms of performance, <strong>ISP-SO(3)</strong> achieves the best results in most
+                        task settings. The remaining 3 settings show only marginal differences (within
+                        1-2%), all
+                        within the standard deviation margins. Similarly, <strong>ISP-SO(2)</strong>
+                        outperforms baselines in 20 settings, which further validates
+                        the effectiveness of our design. With only 100 demonstrations, our model exceeds the
+                        best-performing baseline by an
+                        average of 11.6%. With 200 demonstrations, the advantage remains similar at 10.5%. Importantly,
+                        our model trained with 100
+                        demonstrations surpasses all baselines trained with 200 demonstrations and additional data
+                        augmentation, clearly demonstrating superior data efficiency.
+
+                    </p>
+                </div>
+            </div>
+
+            <h3 class="title is-3 has-text-centered is-size-5-mobile" style="margin-bottom: 1rem; margin-top: 3rem;">
+                Pretraining Effectiveness Analysis</h3>
+
+            <div class="columns is-centered">
+                <div class="column is-11 has-text-justified ">
+                    <p class="subtitle is-5 has-text-justified is-size-6-mobile"
+                        style="margin-bottom: 0.5rem; margin-top: 0rem;">
+                        We further explore whether incorporating a pretrained image encoder can provide additional
+                        performance gains. The table below compares pretrained and from-scratch initialization of the
+                        <strong>equivariant image encoder</strong> used in ISP with 100 demonstrations. The pretrained
+                        checkpoint on ImageNet-1k is available <a href="https://github.com/dmklee/equivision"
+                            target="_blank">here</a>.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="container is-max-desktop is-centered">
+                <img src="./resources/images/pretraining_results.png"
+                    style="width: 100%; display: block; margin: 0 auto;" class="is-hidden-mobile">
+
+                <img src="./resources/images/pretraining_results.png"
+                    style="width: 100%; display: block; margin: 0 auto;" class="is-hidden-desktop">
+            </div>
+
+
+            <div class="columns is-centered">
+                <div class="column is-11 has-text-justified ">
+                    <p class="subtitle is-5 has-text-justified is-size-6-mobile"
+                        style="margin-bottom: 0rem; margin-top: 1.3rem;">
+                        Results show that the <i>Pretrained</i> image encoder surpasses <i>Scratch</i> initialization by
+                        7.1%, indicating consistently improved final performance across most tasks. Moreover, the
+                        pretrained version with only 100 demonstrations achieves comparable performance to training from
+                        scratch with 200 demonstrations, further highlighting its data efficiency.
+                    </p>
+                </div>
+            </div>
+
+            <h3 class="title is-3 has-text-centered is-size-5-mobile" style="margin-bottom: 1rem; margin-top: 3rem;">
+                Ablation Study</h3>
+
+            <div class="columns is-centered">
+                <div class="column is-11 has-text-justified ">
+                    <p class="subtitle is-5 has-text-justified is-size-6-mobile"
+                        style="margin-bottom: 0.5rem; margin-top: 0rem;">
+                        To assess the contribution of each component of our method, we evaluate the following variants
+                        of ISP-$\mathrm{SO}(3)$, each corresponding to a core module in our design: (1)
+                        <strong>Sphere</strong>: With or without the spherical
+                        projection and spherical convolutions for extracting $\mathrm{SO(3)}$-equivariant features from
+                        images. (2) <strong>EquiEnc</strong>:
+                        With or without the equivariant image encoder. (3) <strong>EquiU</strong>: With or without an
+                        equivariant temporal denoising U-Net in the
+                        diffusion module. The results are summarized in the table below. Removing the spherical
+                        projection leads to the
+                        largest performance drop of 9.2%, highlighting its critical role in capturing symmetries.
+                        Disabling the equivariant image encoder and the equivariant U-Net results in drops of 6.8% and
+                        6.7%, respectively. These results demonstrate that all three components are essential for the
+                        overall effectiveness of our method.
+                    </p>
+                </div>
+            </div>
+
+            <div class="container is-max-desktop is-centered">
+                <img src="./resources/images/ablation_results.png" style="width: 60%; display: block; margin: 0 auto;"
+                    class="is-hidden-mobile">
+
+                <img src="./resources/images/ablation_results.png" style="width: 80%; display: block; margin: 0 auto;"
+                    class="is-hidden-desktop">
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <h2 class="title is-2 has-text-centered is-size-4-mobile">Real-World Experimental Results</h2>
+            <h3 class="title is-3 has-text-centered is-size-5-mobile" style="margin-bottom: 0rem; margin-top: 3rem;">
+                Physical Setups</h3>
+            <div class="columns is-centered">
+                <div class="column is-11 has-text-justified ">
+                    <p class="subtitle is-5 has-text-justified is-size-6-mobile"
+                        style="margin-bottom: 1rem; margin-top: 1.3rem;">
+                        The figures below illustrate the four real-world manipulation tasks evaluated in our study. For
+                        each task, we present the initial state (left), the goal state (center), and the distribution of
+                        a subset of
+                        its initial configurations (right). </p>
+                </div>
+            </div>
+
+            <div class="container is-max-desktop is-centered">
+                <img src="./resources/images/box_pipe.png"
+                    style="width: 80%; display: block; margin: 0 auto; margin-bottom: 1rem;" class="is-hidden-mobile">
+
+                <img src="./resources/images/box_pipe.png"
+                    style="width: 80%; display: block; margin: 0 auto; margin-bottom: 1rem;" class="is-hidden-desktop">
+
+                <img src="./resources/images/u_pipe.png"
+                    style="width: 80%; display: block; margin: 0 auto; margin-bottom: 1rem;" class="is-hidden-mobile">
+
+                <img src="./resources/images/u_pipe.png"
+                    style="width: 80%; display: block; margin: 0 auto; margin-bottom: 1rem;" class="is-hidden-desktop">
+
+                <img src="./resources/images/3d_pipe.png"
+                    style="width: 80%; display: block; margin: 0 auto; margin-bottom: 1rem;" class="is-hidden-mobile">
+
+                <img src="./resources/images/3d_pipe.png"
+                    style="width: 80%; display: block; margin: 0 auto; margin-bottom: 1rem;" class="is-hidden-desktop">
+
+                <img src="./resources/images/grocery_bag_retrieval.png"
+                    style="width: 80%; display: block; margin: 0 auto; margin-bottom: 1rem;" class="is-hidden-mobile">
+
+                <img src="./resources/images/grocery_bag_retrieval.png"
+                    style="width: 80%; display: block; margin: 0 auto; margin-bottom: 0rem;" class="is-hidden-desktop">
+            </div>
+
+            <h3 class="title is-3 has-text-centered is-size-5-mobile"
+                style="margin-bottom: 1.3rem; margin-top: 1.5rem;">
+                Real-World Results</h3>
+
+            <div class="columns is-centered">
+                <div class="column is-11 has-text-justified ">
+                    <p class="subtitle is-5 has-text-justified is-size-6-mobile"
+                        style="margin-bottom: 0rem; margin-top: 1.3rem;">
+                        Our method consistently outperforms the baseline across all real-world tasks. Notably, it
+                        reaches 80% vs. 10% on Box-Pipe, 75% vs. 15% on 3D-Pipe, and 85% vs.
+                        65% on U-Pipe. On the Grocery
+                        Bag task, which relies on eye-in-hand perception, it achieves 95% success, demonstrating high
+                        stability and robustness.
+                        These results highlight the effectiveness of our design in tackling
+                        diverse real-world
+                        manipulation challenges. </p>
+                </div>
+            </div>
+
+            <div class="container is-max-desktop is-centered">
+                <img src="./resources/images/real_world_results.png" style="width: 60%; display: block; margin: 0 auto;"
+                    class="is-hidden-mobile">
+
+                <img src="./resources/images/real_world_results.png" style="width: 80%; display: block; margin: 0 auto;"
+                    class="is-hidden-desktop">
+            </div>
+
+
+            <div class="container is-max-desktop" style="max-width: 1200px; margin-top: 1rem; margin-bottom: 0rem;">
+                <div class="columns is-multiline is-centered">
+                    <div class="column is-6-tablet is-6-desktop">
+                        <div class="video-container" style="margin-bottom: 0rem; padding: 0.5rem;">
+                            <video playsinline autoplay loop muted controls src="resources/videos/box_pipe.mp4"
+                                class="rounded-video"></video>
+                            <p class="has-text-centered is-size-4 is-size-5-mobile"
+                                style="margin-top: 0.5rem; margin-bottom: 0rem; font-size: 0.9rem; color: #666;">
+                                Box Pipe Disassembly</p>
+                        </div>
+                    </div>
+                    <div class="column is-6-tablet is-6-desktop">
+                        <div class="video-container" style="margin-bottom: 0rem; padding: 0.5rem;">
+                            <video playsinline autoplay loop muted controls src="resources/videos/u_pipe.mp4"
+                                class="rounded-video"></video>
+                            <p class="has-text-centered is-size-4 is-size-5-mobile"
+                                style="margin-top: 0.5rem; margin-bottom: 0rem; font-size: 0.9rem; color: #666;">
+                                U Pipe Disassembly</p>
+                        </div>
+                    </div>
+
+                    <div class="column is-6-tablet is-6-desktop">
+                        <div class="video-container" style="margin-bottom: 0rem; padding: 0.5rem;">
+                            <video playsinline autoplay loop muted controls src="resources/videos/3d_pipe.mp4"
+                                class="rounded-video"></video>
+                            <p class="has-text-centered is-size-4 is-size-5-mobile "
+                                style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+                                3D Pipe Disassembly</p>
+                        </div>
+                    </div>
+                    <div class="column is-6-tablet is-6-desktop">
+                        <div class="video-container" style="margin-bottom: 0rem; padding: 0.5rem;">
+                            <video playsinline autoplay loop muted controls src="resources/videos/grocery_bag.mp4"
+                                class="rounded-video"></video>
+                            <p class="has-text-centered is-size-4 is-size-5-mobile"
+                                style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+                                Grocery Bag Retrieval</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container is-max-desktop">
+            <h3 class="title is-3 has-text-centered is-size-5-mobile" style="margin-bottom: 1rem; margin-top: 3rem;">
+                Robustness to Real-World Perturbations
+            </h3>
+
+
+            <div class="columns is-centered">
+                <div class="column is-11 has-text-justified ">
+                    <p class="subtitle is-5 has-text-justified is-size-6-mobile"
+                        style="margin-bottom: 0rem; margin-top: 1.3rem;">
+                        To further evaluate the robustness and generalization ability of our policy, we conducted
+                        additional three real-world experiments on the Box-Pipe Disassembly task under various domain
+                        shifts.
+                    </p>
+                </div>
+            </div>
+
+            <div class="container is-max-desktop" style="max-width: 1200px;">
+                <div class="columns is-multiline is-centered" style="margin-bottom: 2rem;">
+
+                    <div class="column is-6-tablet is-6-desktop">
+                        <div class="video-container" style="margin-bottom: 0rem; padding: 0.5rem;">
+                            <video playsinline autoplay loop muted controls src="resources/videos/partial_occlusion.mp4"
+                                class="rounded-video"></video>
+                            <p class="has-text-centered is-size-4 is-size-5-mobile"
+                                style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+                                Partial Occlusion</p>
+                        </div>
+                    </div>
+                    <div class="column is-6-tablet is-6-desktop">
+                        <div class="video-container" style="margin-bottom: 0rem; padding: 0.5rem;">
+                            <video playsinline autoplay loop muted controls
+                                src="resources/videos/dynamic_background.mp4" class="rounded-video"></video>
+                            <p class="has-text-centered is-size-4 is-size-5-mobile"
+                                style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+                                Cluttered Environment</p>
+                        </div>
+                    </div>
+                    <div class="column is-6-tablet is-6-desktop">
+                        <div class="video-container" style="margin-bottom: 2rem; padding: 0.5rem;">
+                            <video playsinline autoplay loop muted controls src="resources/videos/lighting_change.mp4"
+                                class="rounded-video"></video>
+                            <p class="has-text-centered is-size-4 is-size-5-mobile"
+                                style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+                                Lighting Change</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container is-max-desktop">
+            <h3 class="title is-3 has-text-centered is-size-5-mobile" style="margin-bottom: -2rem; margin-top: 3rem;">
+                Play with ISP
+            </h3>
+
+            <section class="section is-small" style="margin-top: 0rem;">
+                <div class="container is-max-desktop">
+                    <iframe width="100%" style="aspect-ratio: 16 / 9;"
+                        src="https://www.youtube.com/embed/OJZUvIeRPUA?si=mtYF2WuAnzFJZAkc" title="Play With ISP"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <section class="section" id="BibTeX">
+        <div class="container is-max-desktop content">
+            <h2 class="title is-3">BibTeX</h2>
+            <pre><code>@article{      
+    hu20253d,
+    title={3D Equivariant Visuomotor Policy Learning via Spherical Projection},
+    author={Hu, Boce and Wang, Dian and Klee, David and Tian, Heng and Zhu, Xupeng and Huang, Haojie and Platt, Robert and Walters, Robin},
+    journal={arXiv preprint arXiv:2505.16969},
+    year={2025}
+}</code></pre>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="columns is-left">
+                <div class="column is-8">
+                    <div class="content">
+                        <p>
+                            Website template modified from <a href="https://3dgsworld.github.io">GSWorld</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
